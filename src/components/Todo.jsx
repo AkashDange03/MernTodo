@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useContext, useState,useEffect } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { Context, server } from '../main';
 import { toast } from 'react-hot-toast';
@@ -9,16 +9,16 @@ import Loader from './Loader';
 function Todo() {
     const { register, reset, handleSubmit } = useForm();
     const { isAuthenticated } = useContext(Context);
-    const [ tasks, setTask ] = useState();
+    const [tasks, setTask] = useState();
     const [refresh, setRefresh] = useState(false);
-    const[loading,setloading]=useState(true);
+    const [loading, setloading] = useState(true);
 
-    const updateHandler = async(id)=>{
+    const updateHandler = async (id) => {
         try {
-            const resdata = await axios.put(`${server}/api/v1/tasks/${id}`,
-             {
-                withCredentials: true,
-            });
+            const resdata = await axios.put(`${server}/api/v1/tasks/${id}`,{},
+                {
+                    withCredentials: true,
+                });
             setRefresh(!refresh);
             toast.success(resdata.data.message);
         } catch (error) {
@@ -26,12 +26,12 @@ function Todo() {
         }
     }
 
-    const deleteHandler = async(id)=>{
+    const deleteHandler = async (id) => {
         try {
             const resdata = await axios.delete(`${server}/api/v1/tasks/${id}`,
-             {
-                withCredentials: true,
-            });
+                {
+                    withCredentials: true,
+                });
             setRefresh(!refresh);
             toast.success(resdata.data.message);
         } catch (error) {
@@ -52,7 +52,7 @@ function Todo() {
                 },
                 withCredentials: true,
             });
-           
+
             reset();
             setRefresh(!refresh);
             toast.success(resdata.data.message);
@@ -62,26 +62,26 @@ function Todo() {
         }
     }
 
-    const fetchTask=async()=>{
+    const fetchTask = async () => {
         try {
             if (isAuthenticated) {
                 setloading(true);
-                const { data } = await axios.get(`${server}/api/v1/tasks/allTasks`,{
-                    withCredentials:true
+                const { data } = await axios.get(`${server}/api/v1/tasks/allTasks`, {
+                    withCredentials: true
                 });
                 setTask(data.taskList);
                 setloading(false);
-            }else{
+            } else {
                 setTask([]);
             }
         } catch (error) {
-
+        toast.error("some error");
         }
     }
 
     useEffect(() => {
         fetchTask()
-    },[refresh]);
+    }, [refresh]);
 
     return (
         <div>
@@ -94,16 +94,16 @@ function Todo() {
             </div>
 
             <div className='flex flex-col items-center w-full my-10'>
-                
-                { loading ? <Loader/> : tasks?.map((task) => (
+
+                {loading ? <Loader /> : tasks?.map((task) => (
                     <Todoitem
-                    key={task._id}
-                    id={task._id}
-                    title={task.title}
-                    iscompleted={task.iscompleted}
-                    description={task.description}
-                    deleteHandler={deleteHandler}
-                    updateHandler={updateHandler}
+                        key={task._id}
+                        id={task._id}
+                        title={task.title}
+                        iscompleted={task.iscompleted}
+                        description={task.description}
+                        deleteHandler={deleteHandler}
+                        updateHandler={updateHandler}
                     />
                 ))}
             </div>
