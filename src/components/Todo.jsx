@@ -15,7 +15,7 @@ function Todo() {
 
     const updateHandler = async(id)=>{
         try {
-            const resdata = await axios.put(`/api/v1/tasks/${id}`,
+            const resdata = await axios.put(`${server}/api/v1/tasks/${id}`,
              {
                 withCredentials: true,
             });
@@ -66,7 +66,9 @@ function Todo() {
         try {
             if (isAuthenticated) {
                 setloading(true);
-                const { data } = await axios.get(`${server}/api/v1/tasks/allTasks`);
+                const { data } = await axios.get(`${server}/api/v1/tasks/allTasks`,{
+                    withCredentials:true
+                });
                 setTask(data.taskList);
                 setloading(false);
             }else{
