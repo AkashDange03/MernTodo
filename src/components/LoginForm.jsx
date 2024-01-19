@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { useForm } from "react-hook-form"
 import toast from "react-hot-toast"
 import axios from 'axios'
-import { Context } from '../main'
+import { Context, server } from '../main'
 import { useNavigate } from 'react-router-dom'
 
 function LoginForm() {
@@ -13,7 +13,7 @@ function LoginForm() {
     const onsubmit = async (data) => {
         try {
             const { email, password } = data;
-            const resdata = await axios.post("/api/v1/users/login",
+            const resdata = await axios.post(`${server}/api/v1/users/login`,
                 {
                     email,
                     password

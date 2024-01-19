@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useContext, useState,useEffect } from 'react'
 import { useForm } from 'react-hook-form'
-import { Context } from '../main';
+import { Context, server } from '../main';
 import { toast } from 'react-hot-toast';
 import Todoitem from './Todoitem';
 import Loader from './Loader';
@@ -28,7 +28,7 @@ function Todo() {
 
     const deleteHandler = async(id)=>{
         try {
-            const resdata = await axios.delete(`/api/v1/tasks/${id}`,
+            const resdata = await axios.delete(`${server}/api/v1/tasks/${id}`,
              {
                 withCredentials: true,
             });
@@ -42,7 +42,7 @@ function Todo() {
     const onsubmit = async (data) => {
         try {
             const { title, description } = data;
-            const resdata = await axios.post("/api/v1/tasks/addTask",
+            const resdata = await axios.post(`${server}/api/v1/tasks/addTask`,
                 {
                     title,
                     description,
@@ -66,7 +66,7 @@ function Todo() {
         try {
             if (isAuthenticated) {
                 setloading(true);
-                const { data } = await axios.get("/api/v1/tasks/allTasks");
+                const { data } = await axios.get(`${server}/api/v1/tasks/allTasks`);
                 setTask(data.taskList);
                 setloading(false);
             }else{

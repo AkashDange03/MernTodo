@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from "react-router-dom";
-import { Context } from '../main';
+import { Context, server } from '../main';
 import { useContext } from 'react';
 import axios from 'axios';
 import toast from "react-hot-toast"
@@ -14,7 +14,7 @@ function Header() {
   const logouthandler = async () => {
     try {
 
-      await axios.get("/api/v1/users/logout",
+      await axios.get(`${server}/api/v1/users/logout`,
         {
           withCredentials: true,
         });

@@ -6,6 +6,7 @@ import { createContext } from 'react'
 
 // created context to check whether user is logged in or not 
 export const Context=createContext({isAuthenticated:false}); 
+export const server="https://todobackend-7nto.onrender.com";
 
 const AppWrapper =()=>{
   const [isAuthenticated,setisAuthenticated]=useState(true);

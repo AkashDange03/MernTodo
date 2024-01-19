@@ -7,7 +7,7 @@ import Login from "./pages/Login"
 import Profile from "./pages/Profile";
 import Signup from "./pages/Signup";
 import axios from "axios";
-import { Context } from "./main";
+import { Context, server } from "./main";
 function App() {
 
   const { setUser,isAuthenticated, setisAuthenticated } = useContext(Context);
@@ -16,7 +16,7 @@ function App() {
   const fetchUser= async()=>{
     try{
       if(isAuthenticated){
-        const {data} = await axios.get("/api/v1/users/me",{
+        const {data} = await axios.get(`${server}/api/v1/users/me`,{
           withCredentials:true
         })
         setUser(data.userprofile);

@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import toast from "react-hot-toast"
-import { Context } from '../main';
+import { Context, server } from '../main';
 
 function SignupForm() {
     const { register, handleSubmit ,formState: { errors }} = useForm();
@@ -12,7 +12,7 @@ function SignupForm() {
     const onsubmit = async (data) => {
         try {
             const { name, email, password } = data;
-            const resdata = await axios.post("/api/v1/users/register",
+            const resdata = await axios.post(`${server}/api/v1/users/register`,
                 {
                     name,
                     email,
